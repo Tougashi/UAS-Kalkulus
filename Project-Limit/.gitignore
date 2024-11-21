@@ -20,3 +20,11 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+package-lock.json
+dist.zip
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
+dist/*
+.DS_Store
