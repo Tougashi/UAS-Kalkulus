@@ -2,8 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     background-color: #f0f0f0;
-    /* Hapus height:100vh dan flexbox positioning */
-    padding: 2rem 0; /* Tambah padding atas bawah */
+    padding: 2rem 0;
 }
 
 .container {
@@ -12,11 +11,10 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 800px; /* Batasi lebar maksimum */
-    margin: 0 auto; /* Center container horizontally */
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-/* CSS lainnya tetap sama */
   input, button {
     padding: 10px;
     margin: 8px 0;

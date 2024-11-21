@@ -12,6 +12,7 @@
     <script src="assets/plugins/nerdamer/nerdamer.core.js"></script>
     <script src="assets/plugins/nerdamer/Calculus.js"></script>
     <script src="assets/plugins/nerdamer/Algebra.js"></script>
+    <script src="assets/plugins/nerdamer/Solve.js"></script>
 
 </head>
 <body>
