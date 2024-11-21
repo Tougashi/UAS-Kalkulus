@@ -1,0 +1,84 @@
+#particles-js {
+    background-color: rgb(255, 255, 255);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+}
+
+.typing-effect {
+    font-size: 2.5rem;
+    color: #333;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 40px; /* Tinggi tetap */
+    display: inline-block;
+}
+.typing-effect::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    border-right: 2px solid #333;
+    animation: blink 0.7s steps(1) infinite;
+}
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+.footer {
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+.navbar-top {
+    background-color: transparent !important;
+    transition: background-color 0.3s ease !important;
+}
+
+
+.navbar-top.scrolled {
+    background-color: #f8f9fa !important;
+}
+
+
+input, button {
+    padding: 10px;
+    margin: 8px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#result {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.badge img {
+    width: 20px; /* Atur lebar sesuai kebutuhan */
+    height: 20px; /* Atur tinggi sesuai kebutuhan */
+    object-fit: contain; /* Sesuaikan agar gambar tidak terdistorsi */
+}
