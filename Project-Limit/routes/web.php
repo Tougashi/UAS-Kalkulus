@@ -10,4 +10,5 @@ Route::get('/', function () {
 Route::controller(ViewController::class)->group(function(){
     route::get('/', 'index');
     route::get('/kalkulator', 'kalkulator');
+    route::get('/quiz', 'quiz');
 });

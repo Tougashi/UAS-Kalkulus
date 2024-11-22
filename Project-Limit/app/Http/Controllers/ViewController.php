@@ -17,4 +17,10 @@ class ViewController extends Controller
             'title' => 'Kalkulator',
         ]);
     }
+    public function quiz(){
+        return view('quiz', [
+            'title' => 'Quiz',
+        ]);
+
+    }
 }

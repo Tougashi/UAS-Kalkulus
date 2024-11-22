@@ -16,6 +16,8 @@
     <script src="assets/plugins/nerdamer/Calculus.js"></script>
     <script src="assets/plugins/nerdamer/Algebra.js"></script>
     <script src="assets/plugins/nerdamer/Solve.js"></script>
+    <script src="assets/plugins/katex/dist/katex.min.js"></script>
+    <script src="assets/plugins/katex/dist/katex.min.css"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FD98QCZN22"></script>
     {{-- <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script> --}}
 
