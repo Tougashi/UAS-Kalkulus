@@ -11,9 +11,9 @@
                                 <form id="limitForm">
                                     <div id="functionsContainer">
                                         <div class="functionInput">
-                                            <label for="function">Masukkan Fungsi Kiri (misal: x^2 + 3*x - 2):</label>
+                                            <label for="function">Masukkan Fungsi Kiri misal: x^2 + 3*x - 2:</label>
                                             <input type="text" class="function form-control mb-2" placeholder="f(x)">
-                                            <label for="function">Masukkan Fungsi Kanan (misal: x^2 + 3*x - 2):</label>
+                                            <label for="function">Masukkan Fungsi Kanan misal: x^2 + 3*x - 2:</label>
                                             <input type="text" class="function form-control mb-2" placeholder="f(x)">
                                         </div>
                                     </div>
@@ -44,7 +44,7 @@
                                 <form id="infinityLimitForm">
                                     <div id="functionsContainerInfinity">
                                         <div class="functionInput">
-                                            <label for="functionInfinity">Masukkan Fungsi (misal: x^2 + 3*x - 2):</label>
+                                            <label for="functionInfinity">Masukkan Fungsi misal: x^2 + 3*x - 2:</label>
                                             <input type="text" class="functionInfinity form-control mb-2" placeholder="f(x)">
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                 <h2>Limit Trigonometri</h2>
                                 <form id="trigonometricLimitForm">
                                     <div class="functionInput">
-                                        <label for="functionTrigonometric">Masukkan Fungsi Trigonometri (misal: sin(x)/x):</label>
+                                        <label for="functionTrigonometric">Masukkan Fungsi Trigonometri misal: (sin(4x) + sin(2x)) / (3x cos(x)):</label>
                                         <input type="text" id="functionTrigonometric" class="form-control mb-2" placeholder="f(x)">
                                     </div>
                                     <label for="variableTrigonometric">Variabel:</label>
