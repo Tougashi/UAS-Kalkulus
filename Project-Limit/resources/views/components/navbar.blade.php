@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-top fixed-top" id="navbar">
     <div class="container-fluid">
-        <a href="/" class="burger-btn d-block nav-link">Limit with Code</a>
+        <a href="/" class="navbar-brand d-block">Limit with Code</a>
         <button
             class="navbar-toggler"
             type="button"
@@ -33,7 +33,6 @@
                         <a class="nav-link" href="/#kontributor">| Kontributor |</a>
                     </li>
                 </div>
-
 
                 <li class="nav-item ms-auto">
                     <a class="btn btn-dark" href="/quiz">

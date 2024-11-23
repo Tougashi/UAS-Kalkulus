@@ -1,7 +1,7 @@
 <x-layout>
     <div class="container" style="padding-top: 80px;">
-        <h1 class="my-5 text-center">Quiz Limit</h1>
-        <div class="container">
+        <h1 class="my-5 text-center">Kuis Limit</h1>
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 mx-auto">
                     <div class="card">
@@ -10,22 +10,21 @@
                                 <div id="question-container" class="mb-4">
                                     <h4 id="question-text" class="mb-3"></h4>
                                     <div id="options-container" class="d-grid gap-2">
-                                        <!-- Options will be inserted here -->
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between">
-                                    <button id="prev-btn" class="btn btn-secondary" disabled>Previous</button>
-                                    <div>
-                                        <span id="question-number"></span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button id="prev-btn" class="btn btn-secondary" disabled>Sebelumnya</button>
+                                    <div class="flex-grow-1 text-center me-4">
+                                        <span id="question-number" class="text-center"></span>
                                     </div>
-                                    <button id="next-btn" class="btn btn-primary">Next</button>
+                                    <button id="next-btn" class="btn btn-primary">Lanjut</button>
                                 </div>
                             </div>
                             <div id="results-container" class="text-center" style="display: none;">
-                                <h3>Quiz Results</h3>
-                                <p>Your score: <span id="score"></span>%</p>
+                                <h3>Hasil Kuis</h3>
+                                <p>Nilaimu: <span id="score"></span>%</p>
                                 <div id="review-container"></div>
-                                <button id="restart-btn" class="btn btn-primary mt-3">Try Again</button>
+                                <button id="restart-btn" class="btn btn-primary mt-3">Coba lagi</button>
                             </div>
                         </div>
                     </div>
@@ -76,11 +75,11 @@
             });
 
             document.getElementById('question-number').textContent =
-                `Question ${currentQuestion + 1} of ${questions.length}`;
+                `Pertanyaan ${currentQuestion + 1} dari ${questions.length}`;
 
             document.getElementById('prev-btn').disabled = currentQuestion === 0;
             document.getElementById('next-btn').innerHTML =
-                currentQuestion === questions.length - 1 ? 'Finish' : 'Next';
+                currentQuestion === questions.length - 1 ? 'Selesai' : 'Selanjutnya';
 
             MathJax.typesetPromise();
         }

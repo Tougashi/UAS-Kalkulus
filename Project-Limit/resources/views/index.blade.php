@@ -5,7 +5,7 @@
           <div class="col-md-8 text-center" style=" padding-top: 150px;">
             <div class="logo">
               <img
-                src="assets/compiled/png/logo_transparent.png"
+                src="{{asset("assets/compiled/png/logo_transparent.png")}}"
                 alt=""
                 width="100"
                 srcset=""
@@ -139,10 +139,10 @@
                             </p>
                             <div class="d-flex justify-content-center">
                                 <button type="button" class="btn btn-dark btn-icon icon-left me-2">
-                                    <img src="assets/images/js.png" alt="" class="img-fluid" style="max-width: 24px;"> JavaScript
+                                    <img src="{{asset("assets/images/js.png")}}" alt="" class="img-fluid" style="max-width: 24px;"> JavaScript
                                 </button>
                                 <button type="button" class="btn btn-dark btn-icon icon-left">
-                                    <img src="assets/images/py.png" alt="" class="img-fluid" style="max-width: 24px;"> Python
+                                    <img src="{{asset("assets/images/py.png")}}" alt="" class="img-fluid" style="max-width: 24px;"> Python
                                 </button>
 
                             </div>
@@ -172,7 +172,7 @@
                     <div class="card-content">
                       <img
                         class="card-img-top img-fluid"
-                        src="./assets/images/adryan.jpg"
+                        src="{{asset("./assets/images/adryan.jpg")}}"
                         alt="Card image cap"
                       />
                       <div class="card-body">
@@ -200,7 +200,7 @@
                     <div class="card-content">
                       <img
                         class="card-img-top img-fluid"
-                        src="./assets/images/farhan.jpg"
+                        src="{{asset("./assets/images/farhan.jpg")}}"
                         alt="Card image cap"
                       />
                       <div class="card-body">
@@ -228,7 +228,7 @@
                     <div class="card-content">
                       <img
                         class="card-img-top img-fluid"
-                        src="./assets/images/farid.jpg"
+                        src="{{asset("./assets/images/farid.jpg")}}"
                         alt="Card image cap"
                       />
                       <div class="card-body">
@@ -274,7 +274,7 @@
                             class="list-group-item d-flex justify-content-between align-items-center text-dark">
                             <span>WhatsApp | +6285877171626</span>
                             <span
-                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="assets/images/ws.png" alt=""></span>
+                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="{{asset("assets/images/ws.png")}}" alt=""></span>
                             </li>
                         </a>
                         <a href="https://instagram.com/adryannn">
@@ -282,7 +282,7 @@
                             class="list-group-item d-flex justify-content-between align-items-center text-dark">
                             <span>Instagram | adryannn</span>
                             <span
-                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="assets/images/ig.png" alt=""></span>
+                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="{{asset("assets/images/ig.png")}}" alt=""></span>
                             </li>
                         </a>
                         <a href="mailto:rootougashi@gmail.com">
@@ -290,7 +290,7 @@
                             class="list-group-item d-flex justify-content-between align-items-center text-dark">
                             <span>Email | rootougashi@gmail.com</span>
                             <span
-                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="assets/images/gm.png" alt=""></span>
+                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="{{asset("assets/images/gm.png")}}" alt=""></span>
                             </li>
                         </a>
                         <a href="https://github.com/Tougashi">
@@ -298,7 +298,7 @@
                             class="list-group-item d-flex justify-content-between align-items-center text-dark">
                             <span>Github | tougashi</span>
                             <span
-                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="assets/images/gh.png" alt=""></span>
+                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="{{asset("assets/images/gh.png")}}" alt=""></span>
                             </li>
                         </a>
                         <a href="https://discordapp.com/users/627121036181110814">
@@ -306,7 +306,7 @@
                             class="list-group-item d-flex justify-content-between align-items-center text-dark">
                             <span>Discord | tougashi</span>
                             <span
-                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="assets/images/dc.png" alt=""></span>
+                                class="badge badge-pill badge-round ms-1 border border-rounded border-dark"><img src="{{asset("assets/images/dc.png")}}" alt=""></span>
                             </li>
                         </a>
                     </ul>
