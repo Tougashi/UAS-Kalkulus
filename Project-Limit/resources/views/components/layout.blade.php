@@ -16,6 +16,7 @@
     <script src="{{ asset('assets/plugins/nerdamer/Calculus.js') }}"></script>
     <script src="{{ asset('assets/plugins/nerdamer/Algebra.js') }}"></script>
     <script src="{{ asset('assets/plugins/nerdamer/Solve.js') }}"></script>
+    <script src="{{ asset('assets/plugins/nerdamer/Extra.js') }}"></script>
     <script src="{{ asset('assets/plugins/katex/dist/katex.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/plugins/katex/dist/katex.min.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -44,7 +45,7 @@
         <footer class="mt-4">
             <div class="footer clearfix mb-0 text-muted">
                 <div class="footer-content">
-                    <p>2024 &copy; <a href="/" class="text-dark">Limit with Code</a> 
+                    <p>2024 &copy; <a href="/" class="text-dark">Limit with Code</a>
                     </p>
                 </div>
             </div>
