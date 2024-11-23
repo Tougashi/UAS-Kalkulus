@@ -35,12 +35,14 @@
     <div id="app">
         <x-sidebar></x-sidebar>
         <main>
-            {{ $slot }}
+            <div id="main">
+                {{ $slot }}
+            </div>
         </main>
     </div>
 
     <script src="{{ asset('assets/js/script.js') }}"></script>
-    <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script> --}}
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
 
     @stack('scripts')
@@ -54,7 +56,6 @@
         const closeSidebar = document.querySelector(".close-sidebar");
         const burgerMenu2 = document.querySelector(".burger-menu2");
 
-        // Toggle sidebar visibility
         function toggleSidebar() {
             sidebar.classList.toggle("active");
             sidebarOverlay.style.display = sidebar.classList.contains("active") ? "block" : "none";

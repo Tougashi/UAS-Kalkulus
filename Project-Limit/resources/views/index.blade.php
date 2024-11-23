@@ -26,7 +26,7 @@
             <div class="card-group">
               <div class="card">
                 <div class="card-content mt-2">
-                  <a href="/belajar/definisi-intuitif">
+                  <a href="/definisi-intuitif">
                     <div class="card-body">
                         <h4 class="card-title">
                         Definisi Intuitif
@@ -37,7 +37,7 @@
               </div>
               <div class="card">
                 <div class="card-content mt-2">
-                  <a href="/belajar/teorema-limit">
+                  <a href="/teorema-limit">
                     <div class="card-body">
                         <h4 class="card-title">
                         Teorema - Teorema Limit
@@ -48,7 +48,7 @@
               </div>
               <div class="card">
                 <div class="card-content mt-2">
-                  <a href="/belajar/limit-0per0">
+                  <a href="/limit-0per0">
                     <div class="card-body">
                         <h4 class="card-title">
                             Limit Fungsi Membentuk
@@ -73,7 +73,7 @@
             <div class="card-group">
               <div class="card">
                 <div class="card-content mt-2">
-                  <a href="/belajar/limit-takhingga">
+                  <a href="/limit-takhingga">
                     <div class="card-body">
                         <h4 class="card-title">
                             Limit Takhingga ∞
@@ -84,7 +84,7 @@
               </div>
               <div class="card">
                 <div class="card-content mt-2">
-                  <a href="/belajar/limit-kiri-kanan">
+                  <a href="/limit-kiri-kanan">
                     <div class="card-body">
                         <h4 class="card-title">
                             Limit Kiri dan Limit Kanan
@@ -95,7 +95,7 @@
               </div>
               <div class="card">
                 <div class="card-content mt-2">
-                  <a href="/belajar/limit-trigonometri">
+                  <a href="/limit-trigonometri">
                     <div class="card-body">
                         <h4 class="card-title">
                             Limit Fungsi Trigonometri
