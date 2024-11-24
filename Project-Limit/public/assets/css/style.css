@@ -190,3 +190,33 @@ body:has(#sidebar.active) .burger-menu2 {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1049;
 }
+
+
+.code-editor {
+    font-family: monospace;
+    border: 1px solid #000000;
+    padding: 10px;
+    min-height: 150px;
+    white-space: pre-wrap;
+}
+.code-editor2 {
+    font-family: monospace;
+    border: 1px solid #000000;
+    padding: 10px;
+    min-height: 150px;
+    white-space: pre-wrap;
+}
+.code-editor3 {
+    font-family: monospace;
+    border: 1px solid #000000;
+    padding: 10px;
+    min-height: 150px;
+    white-space: pre-wrap;
+}
+.code-editor4 {
+    font-family: monospace;
+    border: 1px solid #000000;
+    padding: 10px;
+    min-height: 150px;
+    white-space: pre-wrap;
+}

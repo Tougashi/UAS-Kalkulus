@@ -16,6 +16,6 @@ Route::controller(ViewController::class)->group(function(){
     route::get('/teorema-limit', 'teorema')->name("teorema");
     route::get('/limit-0per0', 'limit0per0')->name("limit0per0");
     route::get('/limit-takhingga', 'limittakhingga')->name("limittakhingga");
-    route::get('/limit-kiri-kanan', 'limitkirikanan')->name("");
+    route::get('/limit-kirikanan', 'limitkirikanan')->name("");
     route::get('/limit-trigonometri', 'limittrigonometri')->name("limittrigonometri");
 });
