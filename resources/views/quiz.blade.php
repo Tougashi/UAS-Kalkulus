@@ -391,6 +391,23 @@ ${code}
             function selectAnswer(index) {
                 userAnswers[currentQuestion] = index;
                 questionsCompleted[currentQuestion] = true;
+                displayQuestion();
+            }
+
+            function calculateScore() {
+                let correct = 0;
+                questions.forEach((question, index) => {
+                    if (question.type === 'multiple-choice') {
+                        if (userAnswers[index] === question.correct) {
+                            correct++;
+                        }
+                    } else {
+                        // For programming questions, the answer was already validated
+                        if (userAnswers[index] === true) {
+                            correct++;
+                        }
+                    }
+                });
                 return Math.round((correct / questions.length) * 100);
             }
 
@@ -399,26 +416,32 @@ ${code}
                 const quizContainer = document.getElementById('quiz-container');
                 const resultsContainer = document.getElementById('results-container');
                 const reviewContainer = document.getElementById('review-container');
+                const score = calculateScore();
 
                 quizContainer.style.display = 'none';
                 resultsContainer.style.display = 'block';
 
-                document.getElementById('score').textContent = calculateScore();
+                let resultMessage = '';
+                if (score >= 80) {
+                    resultMessage = 'Selamat! Hasil yang sangat baik!';
+                } else if (score >= 60) {
+                    resultMessage = 'Cukup baik, terus berlatih!';
+                } else {
+                    resultMessage = 'Jangan menyerah, coba lagi!';
+                }
+
+                document.getElementById('score').innerHTML = `
+                    <div class="mb-3">${score}</div>
+                    <div class="h5">${resultMessage}</div>
+                `;
 
                 reviewContainer.innerHTML = questions.map((question, index) => {
-                    const isCorrect = question.type === 'multiple-choice'
-                        ? userAnswers[index] === question.correct
-                        : userAnswers[index];
-                    const statusBadge = isCorrect
-                        ? '<span class="badge bg-success">Benar</span>'
-                        : '<span class="badge bg-danger">Salah</span>';
-
                     if (question.type === 'multiple-choice') {
                         return `
-                        <div class="card mb-3 ${isCorrect ? 'border-success' : 'border-danger'}">
+                        <div class="card mb-3">
                             <div class="card-body">
-                                <p class="mb-2">${index + 1}. ${question.question} ${statusBadge}</p>
-                                <p class="mb-2">Jawaban kamu: ${question.options[userAnswers[index]] || 'Tidak dijawab'}</p>
+                                <p class="mb-2">${index + 1}. ${question.question}</p>
+                                <p class="mb-2">Jawaban kamu: ${question.options[userAnswers[index]]}</p>
                                 <p class="mb-2">Jawaban soal: ${question.options[question.correct]}</p>
                                 <p class="mb-0">Penjelasan: ${question.explanation}</p>
                             </div>
@@ -426,11 +449,11 @@ ${code}
                     `;
                     } else {
                         return `
-                        <div class="card mb-3 ${isCorrect ? 'border-success' : 'border-danger'}">
+                        <div class="card mb-3">
                             <div class="card-body">
-                                <p class="mb-2">${index + 1}. ${question.question} ${statusBadge}</p>
-                                <p class="mb-2">Output kamu: ${userOutputs[index] || 'Tidak ada output'}</p>
-                                <p class="mb-2">Output yang diharapkan: ${question.expectedOutput}</p>
+                                <p class="mb-2">${index + 1}. ${question.question}</p>
+                                <p class="mb-2">Status: ${userAnswers[index] ? 'Benar' : 'Salah'}</p>
+                                <p class="mb-2">Jawaban soal: ${question.expectedOutput}</p>
                                 <p class="mb-0">Penjelasan: ${question.explanation}</p>
                             </div>
                         </div>
