@@ -5,7 +5,12 @@
         "api/index.php": { "runtime": "vercel-php@0.7.3" }
     },
     "routes": [
-        { "src": "/build/(.*)", "dest": "/public/build/" },
+        { "src": "/assets/images/(.*)", "dest": "/public/assets/images/$1" },
+        { "src": "/assets/css/(.*)", "dest": "/public/assets/css/$1" },
+        { "src": "/assets/js/(.*)", "dest": "/public/assets/js/$1" },
+        { "src": "/assets/extensions/(.*)", "dest": "/public/assets/extensions/$1" },
+        { "src": "/assets/compiled/(.*)", "dest": "/public/assets/compiled/$1" },
+        { "src": "/assets/plugins/(.*)", "dest": "/public/assets/plugins/$1" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "rewrites": [
