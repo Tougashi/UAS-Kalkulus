@@ -255,46 +255,51 @@ print(calculate_limit())`,
                 const jsEditor = document.getElementById('js-editor');
                 const pyEditor = document.getElementById('py-editor');
 
-                // Display the question text with MathJax formatting
                 document.getElementById('question-text').innerHTML = question.question;
 
                 if (question.type === 'programming') {
                     codeSection.style.display = 'block';
-                    optionsContainer.style.display = 'none';
+                    optionsContainer.innerHTML = '';
 
                     if (question.language === 'python') {
                         jsEditor.style.display = 'none';
                         pyEditor.style.display = 'block';
                         document.getElementById('py-code-input').value = userCode[currentQuestion] || question.initialCode;
-                        document.getElementById('output').value = userOutputs[currentQuestion] || '';
                     } else {
                         jsEditor.style.display = 'block';
                         pyEditor.style.display = 'none';
                         document.getElementById('code-input').value = userCode[currentQuestion] || question.initialCode;
-                        document.getElementById('output').value = userOutputs[currentQuestion] || '';
                     }
                 } else {
                     codeSection.style.display = 'none';
                     optionsContainer.style.display = 'block';
-                    
-                    // Create multiple choice buttons
-                    optionsContainer.innerHTML = question.options.map((option, index) => `
-                        <button class="btn btn-outline-primary ${userAnswers[currentQuestion] === index ? 'active' : ''}"
-                                onclick="selectAnswer(${index})">${option}</button>
-                    `).join('');
+
+                    optionsContainer.innerHTML = '';
+                    question.options.forEach((option, index) => {
+                        const button = document.createElement('button');
+                        button.className =
+                            `btn btn-outline-primary ${userAnswers[currentQuestion] === index ? 'active' : ''}`;
+                        button.innerHTML = option;
+                        button.onclick = () => selectAnswer(index);
+                        optionsContainer.appendChild(button);
+                    });
                 }
 
-                // Update question counter
-                document.getElementById('question-number').textContent = 
+                document.getElementById('question-number').textContent =
                     `Pertanyaan ${currentQuestion + 1} dari ${questions.length}`;
 
-                // Update navigation buttons
                 document.getElementById('prev-btn').disabled = currentQuestion === 0;
                 const nextBtn = document.getElementById('next-btn');
-                nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Selesai' : 'Selanjutnya';
-                nextBtn.disabled = currentQuestion === questions.length - 1 && !questionsCompleted.every(q => q);
+                const allCompleted = questionsCompleted.every(q => q);
 
-                // Refresh MathJax rendering
+                if (currentQuestion === questions.length - 1) {
+                    nextBtn.innerHTML = 'Selesai';
+                    nextBtn.disabled = !allCompleted;
+                } else {
+                    nextBtn.innerHTML = 'Selanjutnya';
+                    nextBtn.disabled = false;
+                }
+
                 MathJax.typesetPromise();
             }
 
@@ -389,26 +394,6 @@ ${code}
                 return Math.round((correct / questions.length) * 100);
             }
 
-            function calculateScore() {
-                let correct = 0;
-                for (let i = 0; i < questions.length; i++) {
-                    if (questions[i].type === 'multiple-choice') {
-                        if (userAnswers[i] === questions[i].correct) {
-                            correct++;
-                        }
-                    } else if (questions[i].type === 'programming') {
-                        // For programming questions, check if output matches expected
-                        const expectedOutput = questions[i].expectedOutput;
-                        const userOutput = userOutputs[i]?.trim();
-                        if (userOutput === expectedOutput) {
-                            correct++;
-                        }
-                    }
-                }
-                const scorePercentage = Math.round((correct / questions.length) * 100);
-                return scorePercentage;
-            }
-
             function showResults() {
                 clearInterval(timerInterval);
                 const quizContainer = document.getElementById('quiz-container');
@@ -421,12 +406,19 @@ ${code}
                 document.getElementById('score').textContent = calculateScore();
 
                 reviewContainer.innerHTML = questions.map((question, index) => {
+                    const isCorrect = question.type === 'multiple-choice'
+                        ? userAnswers[index] === question.correct
+                        : userAnswers[index];
+                    const statusBadge = isCorrect
+                        ? '<span class="badge bg-success">Benar</span>'
+                        : '<span class="badge bg-danger">Salah</span>';
+
                     if (question.type === 'multiple-choice') {
                         return `
-                        <div class="card mb-3">
+                        <div class="card mb-3 ${isCorrect ? 'border-success' : 'border-danger'}">
                             <div class="card-body">
-                                <p class="mb-2">${index + 1}. ${question.question}</p>
-                                <p class="mb-2">Jawaban kamu: ${question.options[userAnswers[index]]}</p>
+                                <p class="mb-2">${index + 1}. ${question.question} ${statusBadge}</p>
+                                <p class="mb-2">Jawaban kamu: ${question.options[userAnswers[index]] || 'Tidak dijawab'}</p>
                                 <p class="mb-2">Jawaban soal: ${question.options[question.correct]}</p>
                                 <p class="mb-0">Penjelasan: ${question.explanation}</p>
                             </div>
@@ -434,11 +426,11 @@ ${code}
                     `;
                     } else {
                         return `
-                        <div class="card mb-3">
+                        <div class="card mb-3 ${isCorrect ? 'border-success' : 'border-danger'}">
                             <div class="card-body">
-                                <p class="mb-2">${index + 1}. ${question.question}</p>
-                                <p class="mb-2">Status: ${userAnswers[index] ? 'Benar' : 'Salah'}</p>
-                                <p class="mb-2">Jawaban soal: ${question.expectedOutput}</p>
+                                <p class="mb-2">${index + 1}. ${question.question} ${statusBadge}</p>
+                                <p class="mb-2">Output kamu: ${userOutputs[index] || 'Tidak ada output'}</p>
+                                <p class="mb-2">Output yang diharapkan: ${question.expectedOutput}</p>
                                 <p class="mb-0">Penjelasan: ${question.explanation}</p>
                             </div>
                         </div>
