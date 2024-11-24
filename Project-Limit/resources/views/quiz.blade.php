@@ -97,66 +97,59 @@
             const allQuestions = [
                 {
                     type: 'multiple-choice',
-                    question: 'Hitunglah limit berikut: \\[\\lim_{x \\to 0} (2x + 3)\\]',
-                    options: ['1', '2', '3', '4'],
+                    question: '\\[ \\lim_{x \\to 0}\\frac{2\\sin^{2}\\left(\\frac{x}{2}\\right)}{5x^{2}} \\]',
+                    options: ['0', '1/5', '1/10', '2/5'],
                     correct: 2,
-                    explanation: 'Sederhanakan: \\[\\frac{2x^2 + 3x}{x} = 2x + 3\\]. Substitusi \\(x = 0\\): \\(2(0) + 3 = 3\\).'
+                    explanation: 'Gunakan sifat limit dan rumus dasar \\[\\lim_{x \\to 0}\\frac{\\sin x}{x} = 1\\]. Langkah penyelesaiannya dengan mengganti \\[\\frac{2\\sin(\\frac{x}{2})\\sin(\\frac{x}{2})}{5x \\cdot x}\\] menjadi \\[\\frac{2 \\cdot \\frac{1}{2} \\cdot \\frac{1}{2}}{5} = \\frac{1}{10}\\]'
                 },
                 {
                     type: 'multiple-choice',
-                    question: '\\[ \\lim_{x \\to -2} \\frac{x^2 + 4x + 4}{x + 2} \\]',
-                    options: ['0', '1', '2', '3'],
+                    question: '\\[ \\lim_{x \\to 0}\\frac{\\sin(x + 2)}{x^2 - 4} \\]',
+                    options: ['-1/2', '1/2', '-2', '2'],
                     correct: 0,
-                    explanation: 'Bentuknya \\(0/0\\), faktorkan: \\[\\frac{x^2 + 4x + 4}{x + 2} = \\frac{(x + 2)(x + 2)}{x + 2}\\]. Coret \\(x + 2\\), maka: \\[\\lim_{x \\to -2} x + 2 = -2 + 2 = 0\\].'
+                    explanation: 'Sederhanakan bentuk penyebut: \\[\\lim_{x \\to 0}\\frac{\\sin(x + 2)}{(x + 2)(x - 2)} = \\frac{1}{0 - 2} = -\\frac{1}{2}\\]. Di sini kita faktorkan x² - 4 menjadi (x+2)(x-2)'
                 },
                 {
                     type: 'multiple-choice',
-                    question: '\\[ \\lim_{x \\to 0}\\frac{\\sin x}{x} \\]',
-                    options: ['0', '1', '2', '3'],
-                    correct: 1,
-                    explanation: 'Rumus standar: \\[\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1\\].'
-                },
-                {
-                    type: 'multiple-choice',
-                    question: '\\[ \\lim_{x \\to 0}\\frac{\\tan x}{x} \\]',
-                    options: ['0', '1', '2', '3'],
-                    correct: 1,
-                    explanation: 'Rumus standar: \\[\\lim_{x \\to 0} \\frac{\\tan x}{x} = 1\\].'
-                },
-                {
-                    type: 'multiple-choice',
-                    question: '\\[ \\lim_{x \\to 0}\\frac{\\sin(3x)}{x} \\]',
-                    options: ['1', '2', '3', '4'],
-                    correct: 2,
-                    explanation: 'Atur: \\[\\frac{\\sin(3x)}{x} = \\frac{\\sin(3x)}{3x} \\cdot 3\\]. \\(\\lim_{x \\to 0} \\frac{\\sin(3x)}{3x} = 1\\), sehingga hasilnya \\(3\\).'
-                },
-                {
-                    type: 'multiple-choice',
-                    question: '\\[ \\lim_{x \\to 0} x \\sin\\left(\\frac{1}{x}\\right) \\]',
-                    options: ['0', '1', '2', '3'],
+                    question: '\\[ \\lim_{x \\to \\infty}\\frac{(3x - 2)^3}{(4x + 2)^3} \\]',
+                    options: ['27/64', '3/4', '9/16', '1'],
                     correct: 0,
-                    explanation: 'Karena \\(\\sin\\) selalu berada di \\([-1, 1]\\), maka: \\[-x \\leq x\\sin\\left(\\frac{1}{x}\\right) \\leq x\\]. Dengan teorema pemeras, \\(\\lim_{x \\to 0} x \\sin\\left(\\frac{1}{x}\\right) = 0\\).'
+                    explanation: 'Untuk limit ke tak hingga, bandingkan pangkat tertinggi. Setelah mengembangkan dan membagi dengan x³: \\[\\frac{27x^3 - 54x^2 - 12x - 8}{64x^3 + 96x^2 + 48x + 8} = \\frac{27}{64}\\] karena suku-suku lain mendekati 0'
                 },
                 {
                     type: 'multiple-choice',
-                    question: '\\[ \\lim_{x \\to \\pi/2} (\\sin x + \\cos x) \\]',
-                    options: ['0', '1', '2', '3'],
-                    correct: 1,
-                    explanation: 'Substitusi \\(x = \\pi/2\\): \\[\\sin\\left(\\frac{\\pi}{2}\\right) + \\cos\\left(\\frac{\\pi}{2}\\right) = 1 + 0 = 1\\].'
+                    question: '\\[ \\lim_{x \\to \\infty}\\sqrt{x^2 - 2x} - x \\]',
+                    options: ['0', '1', '-1', '∞'],
+                    correct: 0,
+                    explanation: 'Untuk menyelesaikan ini, kita sederhanakan: \\[\\frac{x}{x} - \\frac{2x^{\\frac{1}{2}}}{x} - \\frac{x}{x} = 1 - 0 - 1 = 0\\]'
                 },
                 {
                     type: 'multiple-choice',
-                    question: '\\[ \\lim_{x \\to \\infty}\\frac{3x^2 + 5}{x^2 + 1} \\]',
-                    options: ['1', '2', '3', '4'],
-                    correct: 2,
-                    explanation: 'Bagi semua suku dengan \\(x^2\\): \\[\\lim_{x \\to \\infty} \\frac{3x^2 + 5}{x^2 + 1} = \\frac{3 + \\frac{5}{x^2}}{1 + \\frac{1}{x^2}} \\to \\frac{3 + 0}{1 + 0} = 3\\].'
+                    question: '\\[ \\lim_{x \\to 2}\\frac{2x^2 - x - 6}{3x^2 - 5x - 2} \\]',
+                    options: ['1', '7/7', '2', '0'],
+                    correct: 0,
+                    explanation: 'Faktorkan pembilang dan penyebut: \\[\\lim_{x \\to 2}\\frac{(2x + 3)(x - 2)}{(3x + 1)(x - 2)} = \\frac{7}{7} = 1\\]. Faktor (x-2) bisa dicoret karena x→2'
                 },
                 {
                     type: 'multiple-choice',
-                    question: '\\[ \\lim_{x \\to \\infty}\\frac{x^3 + x}{2x^3 + 3x} \\]',
-                    options: ['1', '1/2', '2', '3'],
-                    correct: 1,
-                    explanation: 'Bagi semua suku dengan \\(x^3\\): \\[\\lim_{x \\to \\infty} \\frac{x^3 + x}{2x^3 + 3x} = \\frac{1 + \\frac{1}{x^2}}{2 + \\frac{3}{x^2}} \\to \\frac{1 + 0}{2 + 0} = \\frac{1}{2}\\].'
+                    question: '\\[ \\lim_{x \\to 5}\\frac{x^2 - x - 20}{x - 5} \\]',
+                    options: ['9', '10', '5', '8'],
+                    correct: 0,
+                    explanation: 'Faktorkan pembilang: \\[\\frac{(x + 4)(x - 5)}{x - 5} = x + 4\\]. Setelah mencoret (x-5), substitusi x = 5, sehingga: 5 + 4 = 9'
+                },
+                {
+                    type: 'multiple-choice',
+                    question: '\\[ \\lim_{x \\to 3}\\frac{(x - 3)(\\sqrt{x} + \\sqrt{3})}{\\sqrt{x} - \\sqrt{3}} \\]',
+                    options: ['12', '6', '9', '3'],
+                    correct: 0,
+                    explanation: 'Kalikan dengan sekawan \\[\\frac{(x - 3)(\\sqrt{x} + \\sqrt{3})}{\\sqrt{x} - \\sqrt{3}} \\cdot \\frac{\\sqrt{x} + \\sqrt{3}}{\\sqrt{x} + \\sqrt{3}}\\]. Setelah disederhanakan: \\[(2\\sqrt{3})(2\\sqrt{3}) = 12\\]'
+                },
+                {
+                    type: 'multiple-choice',
+                    question: '\\[ \\lim_{x \\to q}\\frac{x\\sqrt{x} - q\\sqrt{q}}{\\sqrt{x} - \\sqrt{q}} \\]',
+                    options: ['3q', '2q', 'q', '4q'],
+                    correct: 0,
+                    explanation: 'Kalikan dengan sekawan dan sederhanakan: \\[\\lim_{x \\to q}\\frac{x\\sqrt{x} - q\\sqrt{q}}{\\sqrt{x} - \\sqrt{q}} \\cdot \\frac{\\sqrt{x} + \\sqrt{q}}{\\sqrt{x} + \\sqrt{q}}\\]. Setelah disederhanakan dan substitusi x = q, hasilnya adalah \\[2q + q = 3q\\]'
                 },
                 {
                     type: 'programming',
@@ -453,9 +446,9 @@ ${code}
                         <div class="card mb-3">
                             <div class="card-body">
                                 <p class="mb-2">${index + 1}. ${question.question}</p>
-                                <p class="mb-2">Your answer: ${question.options[userAnswers[index]]}</p>
-                                <p class="mb-2">Correct answer: ${question.options[question.correct]}</p>
-                                <p class="mb-0">Explanation: ${question.explanation}</p>
+                                <p class="mb-2">Jawaban kamu: ${question.options[userAnswers[index]]}</p>
+                                <p class="mb-2">Jawaban soal: ${question.options[question.correct]}</p>
+                                <p class="mb-0">Penjelasan: ${question.explanation}</p>
                             </div>
                         </div>
                     `;
@@ -465,8 +458,8 @@ ${code}
                             <div class="card-body">
                                 <p class="mb-2">${index + 1}. ${question.question}</p>
                                 <p class="mb-2">Status: ${userAnswers[index] ? 'Benar' : 'Salah'}</p>
-                                <p class="mb-2">Expected Output: ${question.expectedOutput}</p>
-                                <p class="mb-0">Explanation: ${question.explanation}</p>
+                                <p class="mb-2">Jawaban soal: ${question.expectedOutput}</p>
+                                <p class="mb-0">Penjelasan: ${question.explanation}</p>
                             </div>
                         </div>
                     `;
