@@ -50,7 +50,7 @@
                             </div>
                             <div id="results-container" class="text-center" style="display: none;">
                                 <h3>Hasil Kuis</h3>
-                                <p>Nilaimu: <span id="score"></span>%</p>
+                                <p>Nilaimu: <span id="score"></span></p>
                                 <div id="review-container"></div>
                                 <button id="restart-btn" class="btn btn-primary mt-3">Coba lagi</button>
                             </div>
