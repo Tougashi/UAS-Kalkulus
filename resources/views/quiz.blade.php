@@ -255,51 +255,46 @@ print(calculate_limit())`,
                 const jsEditor = document.getElementById('js-editor');
                 const pyEditor = document.getElementById('py-editor');
 
+                // Display the question text with MathJax formatting
                 document.getElementById('question-text').innerHTML = question.question;
 
                 if (question.type === 'programming') {
                     codeSection.style.display = 'block';
-                    optionsContainer.innerHTML = '';
+                    optionsContainer.style.display = 'none';
 
                     if (question.language === 'python') {
                         jsEditor.style.display = 'none';
                         pyEditor.style.display = 'block';
                         document.getElementById('py-code-input').value = userCode[currentQuestion] || question.initialCode;
+                        document.getElementById('output').value = userOutputs[currentQuestion] || '';
                     } else {
                         jsEditor.style.display = 'block';
                         pyEditor.style.display = 'none';
                         document.getElementById('code-input').value = userCode[currentQuestion] || question.initialCode;
+                        document.getElementById('output').value = userOutputs[currentQuestion] || '';
                     }
                 } else {
                     codeSection.style.display = 'none';
                     optionsContainer.style.display = 'block';
-
-                    optionsContainer.innerHTML = '';
-                    question.options.forEach((option, index) => {
-                        const button = document.createElement('button');
-                        button.className =
-                            `btn btn-outline-primary ${userAnswers[currentQuestion] === index ? 'active' : ''}`;
-                        button.innerHTML = option;
-                        button.onclick = () => selectAnswer(index);
-                        optionsContainer.appendChild(button);
-                    });
+                    
+                    // Create multiple choice buttons
+                    optionsContainer.innerHTML = question.options.map((option, index) => `
+                        <button class="btn btn-outline-primary ${userAnswers[currentQuestion] === index ? 'active' : ''}"
+                                onclick="selectAnswer(${index})">${option}</button>
+                    `).join('');
                 }
 
-                document.getElementById('question-number').textContent =
+                // Update question counter
+                document.getElementById('question-number').textContent = 
                     `Pertanyaan ${currentQuestion + 1} dari ${questions.length}`;
 
+                // Update navigation buttons
                 document.getElementById('prev-btn').disabled = currentQuestion === 0;
                 const nextBtn = document.getElementById('next-btn');
-                const allCompleted = questionsCompleted.every(q => q);
+                nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Selesai' : 'Selanjutnya';
+                nextBtn.disabled = currentQuestion === questions.length - 1 && !questionsCompleted.every(q => q);
 
-                if (currentQuestion === questions.length - 1) {
-                    nextBtn.innerHTML = 'Selesai';
-                    nextBtn.disabled = !allCompleted;
-                } else {
-                    nextBtn.innerHTML = 'Selanjutnya';
-                    nextBtn.disabled = false;
-                }
-
+                // Refresh MathJax rendering
                 MathJax.typesetPromise();
             }
 
@@ -392,6 +387,26 @@ ${code}
                 userAnswers[currentQuestion] = index;
                 questionsCompleted[currentQuestion] = true;
                 return Math.round((correct / questions.length) * 100);
+            }
+
+            function calculateScore() {
+                let correct = 0;
+                for (let i = 0; i < questions.length; i++) {
+                    if (questions[i].type === 'multiple-choice') {
+                        if (userAnswers[i] === questions[i].correct) {
+                            correct++;
+                        }
+                    } else if (questions[i].type === 'programming') {
+                        // For programming questions, check if output matches expected
+                        const expectedOutput = questions[i].expectedOutput;
+                        const userOutput = userOutputs[i]?.trim();
+                        if (userOutput === expectedOutput) {
+                            correct++;
+                        }
+                    }
+                }
+                const scorePercentage = Math.round((correct / questions.length) * 100);
+                return scorePercentage;
             }
 
             function showResults() {
