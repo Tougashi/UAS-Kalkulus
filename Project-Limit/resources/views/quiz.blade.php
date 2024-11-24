@@ -139,10 +139,7 @@ console.log(calculateLimit());`,
                     question: 'Buatlah fungsi JavaScript untuk menghitung limit berikut: \\[ \\lim_{x \\to -1} \\frac{x^3 + 1}{x + 1} \\]',
                     initialCode: `
 function calculateLimit() {
-    // 1. Sederhanakan ekspresi: (x^3 + 1)/(x + 1)
-    // 2. Faktorkan pembilang
-    // 3. Kembalikan nilai limit setelah menyederhanakan
-    return // your answer here
+    return
 }
 console.log(calculateLimit());
 `,
