@@ -65,7 +65,7 @@ function calculateInfinityLimit() {
     const variable = document.getElementById("variableInfinity").value.trim();
     const direction = document.getElementById("directionInfinity").value;
 
-    // Validasi input
+    // Input validation
     if (!variable) {
         document.getElementById("result").innerHTML = "Input tidak valid. Pastikan variabel telah diisi.";
         return;
@@ -76,28 +76,19 @@ function calculateInfinityLimit() {
     functionInputs.forEach((input, index) => {
         let func = input.value.trim();
 
-        // Validasi fungsi
         if (!func) {
             resultText += `Fungsi ${index + 1} tidak valid. Pastikan fungsi telah diisi.<br>`;
             return;
         }
 
         try {
-            // Normalisasi input fungsi
-            func = func.replace(/\s+/g, ''); // Menghapus spasi
-            func = func.replace(/\^/g, '**'); // Mengubah ^ menjadi **
-
-            // Analisis fungsi polinomial
-            let terms = analyzePoly(func, variable);
-            let highestDegree = getHighestDegree(terms);
-
             let limitResult;
             if (direction === "infinity") {
-                limitResult = evaluatePolyLimit(terms, highestDegree, true);
-                resultText += `\\( \\lim_{${variable} \\to \\infty} ${formatFunction(func)} = ${formatResult(limitResult)} \\)<br>`;
+                limitResult = nerdamer(`limit(${func}, ${variable}, oo)`).text();
+                resultText += `\\( \\lim_{${variable} \\to \\infty} ${func} = ${limitResult} \\)<br>`;
             } else if (direction === "negative_infinity") {
-                limitResult = evaluatePolyLimit(terms, highestDegree, false);
-                resultText += `\\( \\lim_{${variable} \\to -\\infty} ${formatFunction(func)} = ${formatResult(limitResult)} \\)<br>`;
+                limitResult = nerdamer(`limit(${func}, ${variable}, -oo)`).text();
+                resultText += `\\( \\lim_{${variable} \\to -\\infty} ${func} = ${limitResult} \\)<br>`;
             }
         } catch (error) {
             console.error("Error calculating limit:", error);
@@ -106,7 +97,6 @@ function calculateInfinityLimit() {
     });
 
     document.getElementById("result").innerHTML = resultText;
-    // Refresh MathJax rendering
     if (typeof MathJax !== 'undefined') {
         MathJax.typesetPromise();
     }
