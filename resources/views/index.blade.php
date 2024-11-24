@@ -75,7 +75,7 @@
               </div>
               <div class="card">
                 <div class="card-content mt-2">
-                  <a href="/limit-kiri-kanan">
+                  <a href="/limit-kirikanan">
                     <div class="card-body">
                         <h4 class="card-title">
                             Limit Kiri dan Limit Kanan
