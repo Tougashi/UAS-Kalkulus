@@ -191,32 +191,20 @@ body:has(#sidebar.active) .burger-menu2 {
     z-index: 1049;
 }
 
+.katex-display {
+    white-space: normal;
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-.code-editor {
-    font-family: monospace;
-    border: 1px solid #000000;
-    padding: 10px;
-    min-height: 150px;
-    white-space: pre-wrap;
+.katex {
+    font-size: 1em;
+    line-height: 1.5em;
 }
-.code-editor2 {
-    font-family: monospace;
-    border: 1px solid #000000;
-    padding: 10px;
-    min-height: 150px;
-    white-space: pre-wrap;
-}
-.code-editor3 {
-    font-family: monospace;
-    border: 1px solid #000000;
-    padding: 10px;
-    min-height: 150px;
-    white-space: pre-wrap;
-}
-.code-editor4 {
-    font-family: monospace;
-    border: 1px solid #000000;
-    padding: 10px;
-    min-height: 150px;
-    white-space: pre-wrap;
+
+@media (max-width: 768px) {
+    .katex {
+        font-size: 0.8em;
+    }
 }

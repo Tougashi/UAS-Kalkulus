@@ -12,18 +12,20 @@
                         <div class="divider">
                             <div class="divider-text">Teorema Limit Utama</div>
                         </div>
-                        <p class="text-center">
-                            <ul>
-                                <li>\(\lim_{x \to c} k = k\)</li>
-                                <li>\(\lim_{x \to c} x = c\)</li>
-                                <li>\(\lim_{x \to c} kf(x) = k \cdot \lim_{x \to c} f(x)\)</li>
-                                <li>\(\lim_{x \to c} [f(x) \pm g(x)] = \lim_{x \to c} f(x) \pm \lim_{x \to c} g(x)\)</li>
-                                <li>\(\lim_{x \to c} [f(x) \cdot g(x)] = \lim_{x \to c} f(x) \cdot \lim_{x \to c} g(x)\)</li>
-                                <li>\(\lim_{x \to c} \frac{f(x)}{g(x)} = \frac{\lim_{x \to c} f(x)}{\lim_{x \to c} g(x)} \quad \text{dengan syarat} \quad \lim_{x \to c} g(x) \neq 0\)</li>
-                                <li>\(\lim_{x \to c} [f(x)]^n = \left(\lim_{x \to c} f(x)\right)^n\)</li>
-                                <li>\(\lim_{x \to c} \sqrt[n]{f(x)} = \sqrt[n]{\lim_{x \to c} f(x)} \quad \text{dengan syarat} \quad \lim_{x \to c} f(x) > 0\)</li>
-                            </ul>
-                        </p>
+                        <div style="overflow-x: auto; max-width: 100%;">
+                            <p class="text-center katex-display">
+                                <ul>
+                                    <li>\(\lim_{x \to c} k = k\)</li>
+                                    <li>\(\lim_{x \to c} x = c\)</li>
+                                    <li>\(\lim_{x \to c} kf(x) = k \cdot \lim_{x \to c} f(x)\)</li>
+                                    <li>\(\lim_{x \to c} [f(x) \pm g(x)] = \lim_{x \to c} f(x) \pm \lim_{x \to c} g(x)\)</li>
+                                    <li>\(\lim_{x \to c} [f(x) \cdot g(x)] = \lim_{x \to c} f(x) \cdot \lim_{x \to c} g(x)\)</li>
+                                    <li>\(\lim_{x \to c} \frac{f(x)}{g(x)} = \frac{\lim_{x \to c} f(x)}{\lim_{x \to c} g(x)} \quad \text{dengan syarat} \quad \lim_{x \to c} g(x) \neq 0\)</li>
+                                    <li>\(\lim_{x \to c} [f(x)]^n = \left(\lim_{x \to c} f(x)\right)^n\)</li>
+                                    <li>\(\lim_{x \to c} \sqrt[n]{f(x)} = \sqrt[n]{\lim_{x \to c} f(x)} \quad \text{dengan syarat} \quad \lim_{x \to c} f(x) > 0\)</li>
+                                </ul>
+                            </p>
+                        </div>
                         <div class="divider">
                             <div class="divider-text">Teorema Substitusi</div>
                         </div>
@@ -86,16 +88,29 @@ console.log(`Limit dari ${fungsiStr} saat x mendekati ${x_limit} adalah: ${hasil
                                 </ul>
 
                                 <p><strong>Hasil:</strong></p>
-                                <ul>
-                                    <li>Hasil limit dicetak dalam format:
-                                        \[
-                                        \text{Limit dari } (x*2 + 3)(x-7) \text{ saat } x \text{ mendekati } 2 \text{ adalah: }  hasil.
-                                        \]
-                                    </li>
-                                </ul>
-
+                                    <ul>
+                                        <li>Hasil limit dicetak dalam format:
+                                            <div style="overflow-x: auto; max-width: 100%;">
+                                                <span class="katex-display">
+                                                \[
+                                                \text{Limit dari } (x*2 + 3)(x-7) \text{ saat } x \text{ mendekati } 2 \text{ adalah: }  hasil.
+                                                \]
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 <div class="form-group with-title mb-3">
-                                    <textarea class="form-control" id="exampleFormControlTextarea2" rows="5"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea2" rows="10">
+import math
+from math import sqrt
+
+def nilai_limit (x):
+    return math.sqrt(4*x -3)
+x = 3
+hasil = nilai_limit(x)
+
+print(int(hasil))
+                                        </textarea>
                                     <label><img src="{{asset("assets/images/py.png")}}" alt="" class="img-fluid" style="max-width: 12px;">Python</label>
                                 </div>
                                 <button class="btn btn-dark mb-3" >Jalankan Kode</button>
@@ -103,45 +118,29 @@ console.log(`Limit dari ${fungsiStr} saat x mendekati ${x_limit} adalah: ${hasil
                                     <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" disabled></textarea>
                                     <label>Output</label>
                                 </div>
-                                <p>
-                                    <h4>Penjelasan:</h4>
-                                    <ul>
-                                        <li>
-                                            <strong>Import Library:</strong>
-                                            <ul>
-                                                <li>\(\text{import sympy:}\) Mengimpor library `sympy`, yang digunakan untuk perhitungan simbolik.</li>
-                                                <li>\(\text{from sympy import Symbol, limit:}\) Mengimpor fungsi `Symbol` untuk mendefinisikan variabel simbolik, dan `limit` untuk menghitung limit fungsi.</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <strong>Mendefinisikan Variabel Simbolik:</strong>
-                                            <ul>
-                                                <li>\(x = \text{Symbol('x')}\): Membuat variabel simbolik \(x\), yang memungkinkan operasi matematika dilakukan secara simbolik.</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <strong>Mendefinisikan Fungsi:</strong>
-                                            <ul>
-                                                <li>\(f(x) = (2x + 3)(x - 7)\): Fungsi didefinisikan sebagai hasil perkalian dari dua ekspresi polinomial.</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <strong>Menghitung Limit:</strong>
-                                            <ul>
-                                                <li>\(\text{limit(f, x, 2)}:\) Menghitung nilai limit \(f(x)\) saat \(x \to 2\).</li>
-                                                <li>\(f(2) = (2(2) + 3)(2 - 7) = (4 + 3)(-5) = 7 \times -5 = -35\)</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <strong>Menampilkan Hasil:</strong>
-                                            <ul>
-                                                <li>\(\text{print("Nilai limit:", limit_value)}:\) Menampilkan hasil limit, yaitu \(-35\).</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </p>
+                                <h4>Penjelasan:</h4>
+                                <p><strong>Penjelasan Kode:</strong></p>
+                                <ul>
+                                    <li>Program menggunakan modul <code>math</code> untuk menghitung akar kuadrat dengan fungsi <code>sqrt</code>.</li>
+                                    <li>Fungsi <code>nilai_limit(x)</code> didefinisikan untuk menghitung nilai \( \sqrt{4x - 3} \).</li>
+                                    <li>Variabel <code>x</code> diberikan nilai 3.</li>
+                                    <li>Hasil fungsi dihitung dan disimpan di variabel <code>hasil</code>.</li>
+                                    <li>Hasil dikonversi menjadi bilangan bulat menggunakan <code>int()</code> sebelum dicetak ke konsol.</li>
+                                </ul>
 
-
+                                <p><strong>Contoh Eksekusi:</strong></p>
+                                <ul>
+                                    <li>Jika <code>x = 3</code>, maka:
+                                        <div style="overflow-x: auto; max-width: 100%;">
+                                            <span class="katex-display">
+                                                \[
+                                                \text{nilai} = \sqrt{4(3) - 3} = \sqrt{12 - 3} = \sqrt{9} = 3
+                                                \]
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>Output program adalah: <code>3</code>.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
