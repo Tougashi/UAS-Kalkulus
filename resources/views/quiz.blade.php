@@ -228,6 +228,7 @@ print(calculate_limit())`,
             let timeLeft = 8 * 60; // 8 minutes in seconds
             let timerInterval;
             let questionsCompleted = new Array(questions.length).fill(false);
+            let outputs = new Array(questions.length).fill('');
 
             function startTimer() {
                 timerInterval = setInterval(() => {
@@ -265,10 +266,12 @@ print(calculate_limit())`,
                         jsEditor.style.display = 'none';
                         pyEditor.style.display = 'block';
                         document.getElementById('py-code-input').value = userCode[currentQuestion] || question.initialCode;
+                        document.getElementById('output').value = outputs[currentQuestion] || '';
                     } else {
                         jsEditor.style.display = 'block';
                         pyEditor.style.display = 'none';
                         document.getElementById('code-input').value = userCode[currentQuestion] || question.initialCode;
+                        document.getElementById('output').value = outputs[currentQuestion] || '';
                     }
                 } else {
                     codeSection.style.display = 'none';
@@ -305,11 +308,9 @@ print(calculate_limit())`,
 
             document.getElementById('run-code').onclick = () => {
                 const code = document.getElementById('code-input').value;
-                // Save the code
                 userCode[currentQuestion] = code;
                 let output = '';
 
-                // Create custom console.log
                 const originalConsole = console.log;
                 console.log = (...args) => {
                     output = args.join(' ');
@@ -318,19 +319,18 @@ print(calculate_limit())`,
                 try {
                     eval(code);
                     console.log = originalConsole;
-                    // Save the output
-                    userOutputs[currentQuestion] = output;
+
+                    outputs[currentQuestion] = output; // Store output for current question
                     document.getElementById('output').value = output;
 
-                    // Extract the actual result from the output string
                     const result = output.split(': ')[1];
                     userAnswers[currentQuestion] = result === questions[currentQuestion].expectedOutput;
-                    questionsCompleted[currentQuestion] = true; // Mark programming question as completed
+                    questionsCompleted[currentQuestion] = true;
                     displayQuestion();
                 } catch (error) {
                     console.log = originalConsole;
-                    userOutputs[currentQuestion] = `Error: ${error.message}`;
-                    document.getElementById('output').value = userOutputs[currentQuestion];
+                    outputs[currentQuestion] = `Error: ${error.message}`; // Store error for current question
+                    document.getElementById('output').value = outputs[currentQuestion];
                 }
             };
 
@@ -373,8 +373,8 @@ ${code}
 
                     const finalOutput = output || (result ? result.toString() : '');
 
-                    userOutputs[currentQuestion] = finalOutput.trim();
-                    document.getElementById('output').value = userOutputs[currentQuestion];
+                    outputs[currentQuestion] = finalOutput.trim(); // Store output for current question
+                    document.getElementById('output').value = outputs[currentQuestion];
 
                     const expectedValue = parseFloat(questions[currentQuestion].expectedOutput);
                     const actualValue = parseFloat(finalOutput);
@@ -383,8 +383,8 @@ ${code}
 
                     displayQuestion();
                 } catch (error) {
-                    userOutputs[currentQuestion] = `Error: ${error.message}`;
-                    document.getElementById('output').value = userOutputs[currentQuestion];
+                    outputs[currentQuestion] = `Error: ${error.message}`; // Store error for current question
+                    document.getElementById('output').value = outputs[currentQuestion];
                 }
             };
 
@@ -484,6 +484,7 @@ ${code}
                 userCode.fill(''); // Clear saved code
                 userOutputs.fill(''); // Clear saved outputs
                 questionsCompleted.fill(false);
+                outputs.fill(''); // Clear all outputs
                 timeLeft = 8 * 60;
                 document.getElementById('quiz-container').style.display = 'block';
                 document.getElementById('results-container').style.display = 'none';
