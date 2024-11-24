@@ -21,11 +21,10 @@
                                     <input type="text" id="variable" class="form-control mb-2" value="x" placeholder="x">
                                     <label for="value">Nilai Limit:</label>
                                     <input type="number" id="value" class="form-control mb-2" placeholder="nilai limit">
-                                    <label for="direction">Arah Limit:</label>
+                                    <label for="direction">Jenis Limit:</label>
                                     <select id="direction" class="form-control form-select mb-2">
-                                        <option value="both">Dari Kiri dan Kanan</option>
-                                        <option value="left">Dari Kiri</option>
-                                        <option value="right">Dari Kanan</option>
+                                        <option value="both">Limit Kiri dan Kanan</option>
+                                        <option value="regular">Limit Biasa</option>
                                     </select>
                                 </form>
                             </div>
@@ -91,8 +90,8 @@
 
         <h1 class="mt-2 text-center">Hasil</h1>
         <div class="card mb-4">
-            <div id="result" class="text-center"></div>
-            <canvas id="chart" width="400" height="200"></canvas> <!-- Untuk grafik -->
+            <div id="result" class="text-center p-4"></div>
         </div>
     </div>
 </x-layout>
+

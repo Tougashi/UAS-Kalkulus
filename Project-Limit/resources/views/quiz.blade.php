@@ -18,24 +18,11 @@
                                 <div id="question-container" class="mb-4">
                                     <h4 id="question-text" class="mb-3"></h4>
                                     <div id="code-section" style="display: none">
-                                        <div class="btn-group mb-3" role="group">
-                                            <button class="btn btn-outline-primary active" id="js-btn">JavaScript</button>
-                                            <button class="btn btn-outline-primary" id="py-btn">Python</button>
+                                        <div class="form-group with-title mb-3">
+                                            <textarea id="code-input" class="form-control" rows="10" placeholder="Tulis kode di sini"></textarea>
+                                            <label>Code</label>
                                         </div>
-                                        <div id="js-editor">
-                                            <div class="form-group with-title mb-3">
-                                                <textarea id="code-input" class="form-control" rows="10" placeholder="Tulis kode JavaScript di sini"></textarea>
-                                                <label>JavaScript</label>
-                                            </div>
-                                            <button id="run-code" class="btn btn-dark mb-3">Jalankan Kode</button>
-                                        </div>
-                                        <div id="py-editor" style="display: none;">
-                                            <div class="form-group with-title mb-3">
-                                                <textarea id="py-code-input" class="form-control" rows="10" placeholder="Tulis kode Python di sini"></textarea>
-                                                <label>Python</label>
-                                            </div>
-                                            <button id="run-py-code" class="btn btn-dark mb-3">Jalankan Kode</button>
-                                        </div>
+                                        <button id="run-code" class="btn btn-dark mb-3">Jalankan Kode</button>
                                         <div class="form-group with-title">
                                             <textarea id="output" class="form-control" rows="3" disabled></textarea>
                                             <label>Output</label>
@@ -66,34 +53,8 @@
     </div>
 
     @push('scripts')
-        <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
         <script>
-            let pyodide = null;
-            let pyodideLoading = null;
-
-            async function initPyodide() {
-                if (pyodideLoading) return pyodideLoading;
-                if (pyodide) return pyodide;
-
-                document.getElementById('output').value = "Loading Python Environment...";
-
-                pyodideLoading = (async () => {
-                    try {
-                        pyodide = await loadPyodide();
-                        await pyodide.loadPackage(["numpy", "sympy"]);
-                        document.getElementById('output').value = "Python Environment Ready!";
-                        console.log("Pyodide loaded successfully!");
-                        return pyodide;
-                    } catch (error) {
-                        console.error("Failed to load Pyodide:", error);
-                        document.getElementById('output').value = "Failed to load Python Environment!";
-                        throw error;
-                    }
-                })();
-
-                return pyodideLoading;
-            }
-
+            // Remove pyodide-related code since we're not using Python anymore
             const allQuestions = [
                 {
                     type: 'multiple-choice',
@@ -259,32 +220,13 @@ print(calculate_limit())`,
                 const question = questions[currentQuestion];
                 const codeSection = document.getElementById('code-section');
                 const optionsContainer = document.getElementById('options-container');
-                const jsEditor = document.getElementById('js-editor');
-                const pyEditor = document.getElementById('py-editor');
-                const jsBtn = document.getElementById('js-btn');
-                const pyBtn = document.getElementById('py-btn');
 
                 document.getElementById('question-text').innerHTML = question.question;
 
-                // Toggle display between code editor and multiple choice based on question type
                 if (question.type === 'programming') {
                     codeSection.style.display = 'block';
                     optionsContainer.innerHTML = '';
-
-                    if (question.language === 'python') {
-                        jsEditor.style.display = 'none';
-                        pyEditor.style.display = 'block';
-                        jsBtn.classList.remove('active');
-                        pyBtn.classList.add('active');
-                        document.getElementById('py-code-input').value = userCode[currentQuestion] || question.initialCode;
-                    } else {
-                        jsEditor.style.display = 'block';
-                        pyEditor.style.display = 'none';
-                        jsBtn.classList.add('active');
-                        pyBtn.classList.remove('active');
-                        document.getElementById('code-input').value = userCode[currentQuestion] || question.initialCode;
-                    }
-
+                    document.getElementById('code-input').value = userCode[currentQuestion] || question.initialCode;
                     document.getElementById('output').value = userOutputs[currentQuestion];
                 } else {
                     codeSection.style.display = 'none';
@@ -345,68 +287,6 @@ print(calculate_limit())`,
                     displayQuestion();
                 } catch (error) {
                     console.log = originalConsole;
-                    userOutputs[currentQuestion] = `Error: ${error.message}`;
-                    document.getElementById('output').value = userOutputs[currentQuestion];
-                }
-            };
-
-            document.getElementById('run-py-code').onclick = async () => {
-                if (!pyodide) {
-                    try {
-                        await initPyodide();
-                        // Add SymPy setup code
-                        await pyodide.runPythonAsync(`
-                            import sympy
-                            from sympy import Symbol, limit
-                            x = Symbol('x')
-                        `);
-                    } catch (error) {
-                        document.getElementById('output').value = "Error: Python environment not available. Please try again.";
-                        return;
-                    }
-                }
-
-                const code = document.getElementById('py-code-input').value;
-                userCode[currentQuestion] = code;
-
-                try {
-                    // Clear previous output
-                    document.getElementById('output').value = "Running...";
-
-                    // Create a custom stdout to capture print statements
-                    let output = '';
-                    pyodide.globals.set('__stdout__', {
-                        write: (text) => {
-                            output += text;
-                        }
-                    });
-
-                    // Modify the code to capture stdout
-                    const wrappedCode = `
-import sys
-sys.stdout = __stdout__
-${code}
-`;
-
-                    // Run the Python code
-                    await pyodide.loadPackagesFromImports(wrappedCode);
-                    const result = await pyodide.runPythonAsync(wrappedCode);
-
-                    // Get final output, combining both print statements and return value
-                    const finalOutput = output || (result ? result.toString() : '');
-
-                    // Update the output display
-                    userOutputs[currentQuestion] = finalOutput.trim();
-                    document.getElementById('output').value = userOutputs[currentQuestion];
-
-                    // Compare with expected output (consider floating point precision)
-                    const expectedValue = parseFloat(questions[currentQuestion].expectedOutput);
-                    const actualValue = parseFloat(finalOutput);
-                    userAnswers[currentQuestion] = Math.abs(expectedValue - actualValue) < 1e-6;
-                    questionsCompleted[currentQuestion] = true;
-
-                    displayQuestion();
-                } catch (error) {
                     userOutputs[currentQuestion] = `Error: ${error.message}`;
                     document.getElementById('output').value = userOutputs[currentQuestion];
                 }
