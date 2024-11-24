@@ -18,11 +18,20 @@
                                 <div id="question-container" class="mb-4">
                                     <h4 id="question-text" class="mb-3"></h4>
                                     <div id="code-section" style="display: none">
-                                        <div class="form-group with-title mb-3">
-                                            <textarea id="code-input" class="form-control" rows="10" placeholder="Tulis kode di sini"></textarea>
-                                            <label>Code</label>
+                                        <div id="js-editor">
+                                            <div class="form-group with-title mb-3">
+                                                <textarea id="code-input" class="form-control" rows="10" placeholder="Tulis kode JavaScript di sini"></textarea>
+                                                <label>JavaScript</label>
+                                            </div>
+                                            <button id="run-code" class="btn btn-dark mb-3">Jalankan Kode</button>
                                         </div>
-                                        <button id="run-code" class="btn btn-dark mb-3">Jalankan Kode</button>
+                                        <div id="py-editor" style="display: none;">
+                                            <div class="form-group with-title mb-3">
+                                                <textarea id="py-code-input" class="form-control" rows="10" placeholder="Tulis kode Python di sini"></textarea>
+                                                <label>Python</label>
+                                            </div>
+                                            <button id="run-py-code" class="btn btn-dark mb-3">Jalankan Kode</button>
+                                        </div>
                                         <div class="form-group with-title">
                                             <textarea id="output" class="form-control" rows="3" disabled></textarea>
                                             <label>Output</label>
@@ -53,8 +62,34 @@
     </div>
 
     @push('scripts')
+        <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
         <script>
-            // Remove pyodide-related code since we're not using Python anymore
+            let pyodide = null;
+            let pyodideLoading = null;
+
+            async function initPyodide() {
+                if (pyodideLoading) return pyodideLoading;
+                if (pyodide) return pyodide;
+
+                document.getElementById('output').value = "Loading Python Environment...";
+
+                pyodideLoading = (async () => {
+                    try {
+                        pyodide = await loadPyodide();
+                        await pyodide.loadPackage(["numpy", "sympy"]);
+                        document.getElementById('output').value = "Python Environment Ready!";
+                        console.log("Pyodide loaded successfully!");
+                        return pyodide;
+                    } catch (error) {
+                        console.error("Failed to load Pyodide:", error);
+                        document.getElementById('output').value = "Failed to load Python Environment!";
+                        throw error;
+                    }
+                })();
+
+                return pyodideLoading;
+            }
+
             const allQuestions = [
                 {
                     type: 'multiple-choice',
@@ -217,14 +252,24 @@ print(calculate_limit())`,
                 const question = questions[currentQuestion];
                 const codeSection = document.getElementById('code-section');
                 const optionsContainer = document.getElementById('options-container');
+                const jsEditor = document.getElementById('js-editor');
+                const pyEditor = document.getElementById('py-editor');
 
                 document.getElementById('question-text').innerHTML = question.question;
 
                 if (question.type === 'programming') {
                     codeSection.style.display = 'block';
                     optionsContainer.innerHTML = '';
-                    document.getElementById('code-input').value = userCode[currentQuestion] || question.initialCode;
-                    document.getElementById('output').value = userOutputs[currentQuestion];
+
+                    if (question.language === 'python') {
+                        jsEditor.style.display = 'none';
+                        pyEditor.style.display = 'block';
+                        document.getElementById('py-code-input').value = userCode[currentQuestion] || question.initialCode;
+                    } else {
+                        jsEditor.style.display = 'block';
+                        pyEditor.style.display = 'none';
+                        document.getElementById('code-input').value = userCode[currentQuestion] || question.initialCode;
+                    }
                 } else {
                     codeSection.style.display = 'none';
                     optionsContainer.style.display = 'block';
@@ -289,20 +334,63 @@ print(calculate_limit())`,
                 }
             };
 
+            document.getElementById('run-py-code').onclick = async () => {
+                if (!pyodide) {
+                    try {
+                        await initPyodide();
+                        await pyodide.runPythonAsync(`
+                            import sympy
+                            from sympy import Symbol, limit
+                            x = Symbol('x')
+                        `);
+                    } catch (error) {
+                        document.getElementById('output').value = "Error: Python environment not available. Please try again.";
+                        return;
+                    }
+                }
+
+                const code = document.getElementById('py-code-input').value;
+                userCode[currentQuestion] = code;
+
+                try {
+                    document.getElementById('output').value = "Running...";
+
+                    let output = '';
+                    pyodide.globals.set('__stdout__', {
+                        write: (text) => {
+                            output += text;
+                        }
+                    });
+
+                    const wrappedCode = `
+import sys
+sys.stdout = __stdout__
+${code}
+`;
+
+                    await pyodide.loadPackagesFromImports(wrappedCode);
+                    const result = await pyodide.runPythonAsync(wrappedCode);
+
+                    const finalOutput = output || (result ? result.toString() : '');
+
+                    userOutputs[currentQuestion] = finalOutput.trim();
+                    document.getElementById('output').value = userOutputs[currentQuestion];
+
+                    const expectedValue = parseFloat(questions[currentQuestion].expectedOutput);
+                    const actualValue = parseFloat(finalOutput);
+                    userAnswers[currentQuestion] = Math.abs(expectedValue - actualValue) < 1e-6;
+                    questionsCompleted[currentQuestion] = true;
+
+                    displayQuestion();
+                } catch (error) {
+                    userOutputs[currentQuestion] = `Error: ${error.message}`;
+                    document.getElementById('output').value = userOutputs[currentQuestion];
+                }
+            };
+
             function selectAnswer(index) {
                 userAnswers[currentQuestion] = index;
                 questionsCompleted[currentQuestion] = true;
-                displayQuestion();
-            }
-
-            function calculateScore() {
-                const correct = userAnswers.reduce((sum, answer, index) => {
-                    if (questions[index].type === 'multiple-choice') {
-                        return sum + (answer === questions[index].correct ? 1 : 0);
-                    } else {
-                        return sum + (answer === true ? 1 : 0);
-                    }
-                }, 0);
                 return Math.round((correct / questions.length) * 100);
             }
 
