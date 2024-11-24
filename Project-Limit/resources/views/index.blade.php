@@ -51,16 +51,7 @@
                   <a href="/limit-0per0">
                     <div class="card-body">
                         <h4 class="card-title">
-                            Limit Fungsi Membentuk
-                            <span style="display: inline-block; vertical-align: middle; font-size: 12px; line-height: 1; margin-left: 5px;">
-                                <span style="display: inline-block; text-align: center;">
-                                    0
-                                </span>
-                                <span style="display: inline-block; text-align: center; margin: 0 2px;">/</span>
-                                <span style="display: inline-block; text-align: center;">
-                                    0
-                                </span>
-                            </span>
+                            Limit Fungsi Membentuk \( \frac{0}{0} \)
                         </h4>
                     </div>
                   </a>

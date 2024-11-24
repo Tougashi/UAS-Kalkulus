@@ -42,7 +42,7 @@
             </li>
             <li class="sidebar-item">
                 <a href="/limit-0per0" class="sidebar-link">
-                <span>Limit Fungsi Membentuk 0/0</span>
+                <span>Limit Fungsi Membentuk \( \frac{0}{0} \)</span>
                 </a>
             </li>
             <li class="sidebar-item">
