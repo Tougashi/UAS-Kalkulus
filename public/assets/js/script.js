@@ -122,7 +122,8 @@ function calculateInfinityLimit() {
 
     try {
         // Evaluasi limit menggunakan metode manual
-        const limitResult = evaluateLimit(func, variable, direction === "infinity" ? Infinity : -Infinity);
+        // const limitResult = evaluateLimit(func, variable, direction === "infinity" ? "Infinity" : "-Infinity");
+        const limitResult = nerdamer(`limit(${func}, ${variable}, ${direction === "infinity" ? "Infinity" : "-Infinity"})`);
         resultText = `\\( \\lim_{{${variable} \\to ${direction === "infinity" ? "\\infty" : "-\\infty"}}} ${func} = ${limitResult} \\)`;
     } catch (error) {
         console.error("Kesalahan dalam perhitungan limit:", error);
