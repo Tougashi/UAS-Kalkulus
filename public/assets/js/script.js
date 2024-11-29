@@ -87,42 +87,33 @@ function calculateLimit() {
 function calculateTrigonometricLimit() {
     const func = document.getElementById("functionTrigonometric").value.trim();
     const variable = document.getElementById("variableTrigonometric").value.trim();
-    const value = parseFloat(document.getElementById("valueTrigonometric").value);
+    const valueInput = document.getElementById("valueTrigonometric").value.trim();
 
-    if (!variable || isNaN(value) || !func) {
+    if (!variable || !func || !valueInput) {
         document.getElementById("result").innerText = "Input tidak valid. Pastikan semua bidang telah diisi dengan benar.";
         return;
     }
 
     let resultText = "";
-
     try {
-        // Format fungsi agar mendukung fungsi trigonometri Nerdamer
-        const formattedFunc = func
-            .replace(/sin/g, "sin")
-            .replace(/cos/g, "cos")
-            .replace(/tan/g, "tan")
-            .replace(/sec/g, "sec")
-            .replace(/csc/g, "csc")
-            .replace(/cot/g, "cot");
-
-        // Hitung limit menggunakan Nerdamer
-        const limitResult = nerdamer(`limit(${formattedFunc}, ${variable}, ${value})`).evaluate().text();
-
-        // Tambahkan hasil ke output
-        resultText += `\\( \\lim_{{${variable} \\to ${value}}} ${formattedFunc} = ${limitResult} \\)<br>`;
+        // Parse the value input to handle expressions like pi/4, pi/2, etc.
+        let value = valueInput.toLowerCase();
+        // Replace 'pi' with the mathematical constant
+        value = value.replace(/pi/g, 'pi');
+        
+        const limitResult = nerdamer(`limit(${func}, ${variable}, ${value})`).text();
+        // For display, convert the value back to a more readable format if it contains pi
+        const displayValue = valueInput.toLowerCase().includes('pi') ? 
+            valueInput.replace(/pi/gi, '\\pi') : valueInput;
+            
+        resultText += `\\( \\lim_{{${variable} \\to ${displayValue}}} ${func} = ${limitResult} \\)<br>`;
     } catch (error) {
         console.error("Kesalahan dalam perhitungan limit:", error);
         resultText += `Kesalahan dalam perhitungan fungsi. Periksa kembali input Anda.<br>`;
     }
 
-    // Tampilkan hasil di elemen result
     document.getElementById("result").innerHTML = resultText;
-
-    // Render MathJax untuk menampilkan persamaan dengan format LaTeX
-    if (typeof MathJax !== "undefined") {
-        MathJax.typesetPromise();
-    }
+    MathJax.typesetPromise();
 }
 
 function calculateInfinityLimit() {
