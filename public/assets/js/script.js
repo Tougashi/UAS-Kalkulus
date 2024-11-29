@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
 function calculateLimit() {
     const functionInputs = document.querySelectorAll(".function");
     const variable = document.getElementById("variable").value.trim();
-    const value = parseFloat(document.getElementById("value").value);
+    const valueInput = document.getElementById("value").value.trim();
     const direction = document.getElementById("direction").value;
 
-    if (!variable || isNaN(value)) {
+    if (!variable || !valueInput) {
         document.getElementById("result").innerText = "Input tidak valid. Pastikan semua bidang telah diisi dengan benar.";
         return;
     }
@@ -31,8 +31,8 @@ function calculateLimit() {
             resultText = "Fungsi tidak valid. Pastikan fungsi telah diisi dengan benar.";
         } else {
             try {
-                const limitResult = nerdamer(`limit(${func}, ${variable}, ${value})`).text();
-                resultText = `\\( \\lim_{{${variable} \\to ${value}}} ${func} = ${limitResult} \\)`;
+                const limitResult = nerdamer(`limit(${func}, ${variable}, ${valueInput})`).text();
+                resultText = `\\[ \\lim_{${variable} \\to ${valueInput}} ${nerdamer(func).toTeX()} = ${nerdamer(limitResult).toTeX()} \\]`;
             } catch (error) {
                 console.error("Kesalahan dalam perhitungan limit:", error);
                 resultText = "Kesalahan dalam perhitungan fungsi. Periksa kembali input Anda.";
@@ -50,31 +50,29 @@ function calculateLimit() {
 
             try {
                 if (direction === "both") {
-                    if(index === 0){
-                        limitLeft = nerdamer(`limit(${func}, ${variable}, ${value}, -1)`).text();
-                        resultText += `\\( \\lim_{{${variable} \\to ${value}^-}} ${func} = ${limitLeft} \\)<br>`;
-                    }else{
-                        limitRight = nerdamer(`limit(${func}, ${variable}, ${value}, 1)`).text();
-                        resultText += `\\( \\lim_{{${variable} \\to ${value}^+}} ${func} = ${limitRight} \\)<br>`;
+                    if(index === 0) {
+                        limitLeft = nerdamer(`limit(${func}, ${variable}, ${valueInput}, -1)`).text();
+                        resultText += `\\[ \\lim_{${variable} \\to ${valueInput}^-} ${nerdamer(func).toTeX()} = ${nerdamer(limitLeft).toTeX()} \\]`;
+                    } else {
+                        limitRight = nerdamer(`limit(${func}, ${variable}, ${valueInput}, 1)`).text();
+                        resultText += `\\[ \\lim_{${variable} \\to ${valueInput}^+} ${nerdamer(func).toTeX()} = ${nerdamer(limitRight).toTeX()} \\]`;
 
-                        if(limitLeft === limitRight){
-                            resultText += `Limit kiri dan kanan Sama, jadi fungsi tersebut memiliki limit<br>`;
-                        }else{
-                            resultText += `Limit kiri dan kanan Tidak Sama, jadi fungsi tersebut tidak memiliki limit<br>`;
+                        if(limitLeft === limitRight) {
+                            resultText += `<div class="alert alert-success mt-3">Limit kiri dan kanan sama, jadi fungsi tersebut memiliki limit</div>`;
+                        } else {
+                            resultText += `<div class="alert alert-warning mt-3">Limit kiri dan kanan tidak sama, jadi fungsi tersebut tidak memiliki limit</div>`;
                         }
                     }
                 } else if (direction === "left") {
-                    limitLeft = nerdamer(`limit(${func}, ${variable}, ${value}, -1)`).text();
-                    resultText += `\\( \\lim_{{${variable} \\to ${value}^-}} ${func} = ${limitLeft} \\)<br>`;
+                    limitLeft = nerdamer(`limit(${func}, ${variable}, ${valueInput}, -1)`).text();
+                    resultText += `\\[ \\lim_{${variable} \\to ${valueInput}^-} ${nerdamer(func).toTeX()} = ${nerdamer(limitLeft).toTeX()} \\]`;
                 } else if (direction === "right") {
-                    limitRight = nerdamer(`limit(${func}, ${variable}, ${value}, 1)`).text();
-                    resultText += `\\( \\lim_{{${variable} \\to ${value}^+}} ${func} = ${limitRight} \\)<br>`;
-                } else {
-                    resultText += "Arah limit tidak valid. Pilih 'both', 'left', atau 'right'.<br>";
+                    limitRight = nerdamer(`limit(${func}, ${variable}, ${valueInput}, 1)`).text();
+                    resultText += `\\[ \\lim_{${variable} \\to ${valueInput}^+} ${nerdamer(func).toTeX()} = ${nerdamer(limitRight).toTeX()} \\]`;
                 }
             } catch (error) {
                 console.error("Kesalahan dalam perhitungan limit:", error);
-                resultText += `Kesalahan dalam perhitungan fungsi ${index + 1}. Periksa kembali input Anda.<br>`;
+                resultText += `<div class="alert alert-danger">Kesalahan dalam perhitungan fungsi ${index + 1}. Periksa kembali input Anda.</div>`;
             }
         });
     }
@@ -83,33 +81,23 @@ function calculateLimit() {
     MathJax.typesetPromise();
 }
 
-
 function calculateTrigonometricLimit() {
     const func = document.getElementById("functionTrigonometric").value.trim();
     const variable = document.getElementById("variableTrigonometric").value.trim();
     const valueInput = document.getElementById("valueTrigonometric").value.trim();
 
-    if (!variable || !func || !valueInput) {
+    if (!variable || !valueInput || !func) {
         document.getElementById("result").innerText = "Input tidak valid. Pastikan semua bidang telah diisi dengan benar.";
         return;
     }
 
     let resultText = "";
     try {
-        // Parse the value input to handle expressions like pi/4, pi/2, etc.
-        let value = valueInput.toLowerCase();
-        // Replace 'pi' with the mathematical constant
-        value = value.replace(/pi/g, 'pi');
-        
-        const limitResult = nerdamer(`limit(${func}, ${variable}, ${value})`).text();
-        // For display, convert the value back to a more readable format if it contains pi
-        const displayValue = valueInput.toLowerCase().includes('pi') ? 
-            valueInput.replace(/pi/gi, '\\pi') : valueInput;
-            
-        resultText += `\\( \\lim_{{${variable} \\to ${displayValue}}} ${func} = ${limitResult} \\)<br>`;
+        const limitResult = nerdamer(`limit(${func}, ${variable}, ${valueInput})`).text();
+        resultText = `\\[ \\lim_{${variable} \\to ${valueInput}} ${nerdamer(func).toTeX()} = ${nerdamer(limitResult).toTeX()} \\]`;
     } catch (error) {
         console.error("Kesalahan dalam perhitungan limit:", error);
-        resultText += `Kesalahan dalam perhitungan fungsi. Periksa kembali input Anda.<br>`;
+        resultText = `<div class="alert alert-danger">Kesalahan dalam perhitungan fungsi. Periksa kembali input Anda.</div>`;
     }
 
     document.getElementById("result").innerHTML = resultText;
@@ -118,15 +106,6 @@ function calculateTrigonometricLimit() {
 
 function calculateInfinityLimit() {
     const functionInputs = document.querySelectorAll(".functionInfinity");
-    const variable = document.getElementById("variableInfinity").value.trim();
-    const direction = document.getElementById("directionInfinity").value;
-
-    if (!variable || !functionInputs[0].value.trim()) {
-        document.getElementById("result").innerText = "Input tidak valid. Pastikan semua bidang telah diisi dengan benar.";
-        return;
-    }
-
-    const func = functionInputs[0].value.trim();
     let resultText = "";
 
     try {
@@ -177,9 +156,4 @@ function evaluateLimit(func, variable, direction) {
     return result;
 }
 
-// Add these functions after the existing code...
-
-// Remove these functions at the end of the file:
-// - insertToInput()
-// - clearInput()
 
