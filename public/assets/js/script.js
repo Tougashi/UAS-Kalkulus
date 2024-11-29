@@ -97,16 +97,34 @@ function calculateTrigonometricLimit() {
     let resultText = "";
 
     try {
-        const limitResult = nerdamer(`limit(${func}, ${variable}, ${value})`).text();
-        resultText += `\\( \\lim_{{${variable} \\to ${value}}} ${func} = ${limitResult} \\)<br>`;
+        // Format fungsi agar mendukung fungsi trigonometri Nerdamer
+        const formattedFunc = func
+            .replace(/sin/g, "sin")
+            .replace(/cos/g, "cos")
+            .replace(/tan/g, "tan")
+            .replace(/sec/g, "sec")
+            .replace(/csc/g, "csc")
+            .replace(/cot/g, "cot");
+
+        // Hitung limit menggunakan Nerdamer
+        const limitResult = nerdamer(`limit(${formattedFunc}, ${variable}, ${value})`).evaluate().text();
+
+        // Tambahkan hasil ke output
+        resultText += `\\( \\lim_{{${variable} \\to ${value}}} ${formattedFunc} = ${limitResult} \\)<br>`;
     } catch (error) {
         console.error("Kesalahan dalam perhitungan limit:", error);
         resultText += `Kesalahan dalam perhitungan fungsi. Periksa kembali input Anda.<br>`;
     }
 
+    // Tampilkan hasil di elemen result
     document.getElementById("result").innerHTML = resultText;
-    MathJax.typesetPromise();
+
+    // Render MathJax untuk menampilkan persamaan dengan format LaTeX
+    if (typeof MathJax !== "undefined") {
+        MathJax.typesetPromise();
+    }
 }
+
 function calculateInfinityLimit() {
     const functionInputs = document.querySelectorAll(".functionInfinity");
     const variable = document.getElementById("variableInfinity").value.trim();
@@ -121,9 +139,9 @@ function calculateInfinityLimit() {
     let resultText = "";
 
     try {
-        // Evaluasi limit menggunakan metode numerik
-        const limitResult = evaluateLimit(func, variable, direction);
-        resultText = `\\( \\lim_{{${variable} \\to ${direction === "infinity" ? "\\infty" : (direction === "-infinity" ? "-\\infty" : direction)}}} ${func} = ${limitResult} \\)`;
+        // Evaluasi limit menggunakan metode manual
+        const limitResult = evaluateLimit(func, variable, direction === "infinity" ? Infinity : -Infinity);
+        resultText = `\\( \\lim_{{${variable} \\to ${direction === "infinity" ? "\\infty" : "-\\infty"}}} ${func} = ${limitResult} \\)`;
     } catch (error) {
         console.error("Kesalahan dalam perhitungan limit:", error);
         resultText = "Kesalahan dalam perhitungan fungsi. Periksa kembali input Anda.";
@@ -134,30 +152,43 @@ function calculateInfinityLimit() {
 }
 
 function evaluateLimit(func, variable, direction) {
-    const math = window.math; // Pastikan library math.js sudah di-load
-    let point;
+    // Pisahkan fungsi menjadi array dari suku-suku, misalnya x^2 + 3*x - 2
+    const terms = func.split(/\s*\+\s*|\s*-\s*/);
+    let result = 0;
 
-    // Tentukan titik arah
-    if (direction === "infinity") {
-        point = 1e10; // Angka besar untuk mendekati tak hingga positif
-    } else if (direction === "-infinity") {
-        point = -1e10; // Angka kecil untuk mendekati tak hingga negatif
-    } else {
-        point = parseFloat(direction); // Angka spesifik (untuk limit biasa)
-        if (isNaN(point)) throw new Error("Arah limit tidak valid.");
+    for (let term of terms) {
+        term = term.trim();
+        const sign = func.includes(`-${term}`) ? -1 : 1; // Deteksi tanda positif/negatif
+
+        // Evaluasi setiap suku
+        const parsedTerm = term.replace(new RegExp(variable, "g"), `(${direction})`);
+
+        try {
+            const termResult = math.evaluate(parsedTerm) * sign;
+
+            // Jika hasil suku adalah Infinity atau -Infinity, prioritaskan hasil akhir
+            if (termResult === Infinity || termResult === -Infinity) {
+                result = termResult;
+                break;
+            }
+
+            result += termResult;
+        } catch (error) {
+            console.error("Kesalahan dalam evaluasi suku:", term, error);
+            throw error;
+        }
     }
 
-    // Fungsi substitusi variabel
-    const substitutedFunc = func.replace(new RegExp(variable, "g"), `(${point})`);
-
-    // Evaluasi hasil
-    const result = math.evaluate(substitutedFunc);
-
+    // Jika hasilnya Infinity atau -Infinity, berikan simbol yang benar
     if (result === Infinity) return "\\infty";
     if (result === -Infinity) return "-\\infty";
 
-    return result.toFixed(4); // Bulatkan ke 4 desimal
+    return result;
 }
 
+// Add these functions after the existing code...
 
+// Remove these functions at the end of the file:
+// - insertToInput()
+// - clearInput()
 
