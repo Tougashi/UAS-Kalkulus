@@ -104,56 +104,28 @@ function calculateTrigonometricLimit() {
     MathJax.typesetPromise();
 }
 
-function calculateInfinityLimit() {
-    const functionInputs = document.querySelectorAll(".functionInfinity");
-    let resultText = "";
 
+
+function calculateInfinityLimit() {
+    const func = document.querySelector(".functionInfinity").value.trim();
+    const variable = document.getElementById("variableInfinity").value.trim();
+    const direction = document.getElementById("directionInfinity").value;
+
+    if (!variable || !func) {
+        document.getElementById("result").innerText = "Input tidak valid. Pastikan semua bidang telah diisi dengan benar.";
+        return;
+    }
+
+    let resultText = "";
     try {
-        // Evaluasi limit menggunakan metode manual
-        const limitResult = evaluateLimit(func, variable, direction === "infinity" ? Infinity : -Infinity);
-        resultText = `\\( \\lim_{{${variable} \\to ${direction === "infinity" ? "\\infty" : "-\\infty"}}} ${func} = ${limitResult} \\)`;
+        const value = direction === "infinity" ? "Infinity" : "-Infinity";
+        const limitResult = math.evaluate(`limit(${func}, ${variable}, ${value})`);
+        resultText = `\\[ \\lim_{{${variable} \\to ${value}}} ${math.parse(func).toTex()} = ${math.parse(limitResult).toTex()} \\]`;
     } catch (error) {
         console.error("Kesalahan dalam perhitungan limit:", error);
-        resultText = "Kesalahan dalam perhitungan fungsi. Periksa kembali input Anda.";
+        resultText = `<div class="alert alert-danger">Kesalahan dalam perhitungan fungsi. Periksa kembali input Anda.</div>`;
     }
 
     document.getElementById("result").innerHTML = resultText;
     MathJax.typesetPromise();
 }
-
-function evaluateLimit(func, variable, direction) {
-    // Pisahkan fungsi menjadi array dari suku-suku, misalnya x^2 + 3*x - 2
-    const terms = func.split(/\s*\+\s*|\s*-\s*/);
-    let result = 0;
-
-    for (let term of terms) {
-        term = term.trim();
-        const sign = func.includes(`-${term}`) ? -1 : 1; // Deteksi tanda positif/negatif
-
-        // Evaluasi setiap suku
-        const parsedTerm = term.replace(new RegExp(variable, "g"), `(${direction})`);
-
-        try {
-            const termResult = math.evaluate(parsedTerm) * sign;
-
-            // Jika hasil suku adalah Infinity atau -Infinity, prioritaskan hasil akhir
-            if (termResult === Infinity || termResult === -Infinity) {
-                result = termResult;
-                break;
-            }
-
-            result += termResult;
-        } catch (error) {
-            console.error("Kesalahan dalam evaluasi suku:", term, error);
-            throw error;
-        }
-    }
-
-    // Jika hasilnya Infinity atau -Infinity, berikan simbol yang benar
-    if (result === Infinity) return "\\infty";
-    if (result === -Infinity) return "-\\infty";
-
-    return result;
-}
-
-
