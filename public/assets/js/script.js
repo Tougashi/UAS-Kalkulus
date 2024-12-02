@@ -58,9 +58,9 @@ function calculateLimit() {
                         resultText += `\\[ \\lim_{${variable} \\to ${valueInput}^+} ${nerdamer(func).toTeX()} = ${nerdamer(limitRight).toTeX()} \\]`;
 
                         if(limitLeft === limitRight) {
-                            resultText += `<div class="alert alert-success mt-3">Limit kiri dan kanan sama, jadi fungsi tersebut memiliki limit</div>`;
+                            resultText += `<div class="alert mt-3">Limit kiri dan kanan sama, jadi fungsi tersebut memiliki limit</div>`;
                         } else {
-                            resultText += `<div class="alert alert-warning mt-3">Limit kiri dan kanan tidak sama, jadi fungsi tersebut tidak memiliki limit</div>`;
+                            resultText += `<div class="alert mt-3">Limit kiri dan kanan tidak sama, jadi fungsi tersebut tidak memiliki limit</div>`;
                         }
                     }
                 } else if (direction === "left") {
