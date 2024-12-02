@@ -168,7 +168,7 @@
                       />
                       <div class="card-body">
                         <h4 class="card-title">Muhammad Adryan Suryaman</h4>
-                        <p class="text-muted">Front End</p>
+                        <p class="text-muted">Full Stack</p>
                         <button type="button" class="btn btn-dark" id="toastBtnAdryan">Pesan</button>
                         <div class="toast-container position-fixed bottom-0 end-0 p-3">
                           <div id="toastAdryan" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
